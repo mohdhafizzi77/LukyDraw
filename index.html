@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#d4a24c"/>
+<title>Jabil Annual Dinner 2026 — Digital Signature Form</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css"/>
+<style>
+  :root{
+    --gold:#d4a24c;
+    --gold-2:#f4d58d;
+    --ink:#1f2937;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+  *{ -webkit-tap-highlight-color: transparent; }
+  html{ -webkit-text-size-adjust: 100%; }
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #fff7e0 0%, transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, #ffe9c7 0%, transparent 55%),
+      linear-gradient(180deg,#fbfaf5 0%, #f3efe6 100%);
+    color:var(--ink);
+    min-height:100vh;
+    min-height:100dvh;
+    padding-top: calc(0.5rem + var(--safe-top));
+    padding-bottom: calc(1rem + var(--safe-bottom));
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+    overflow-x:hidden;
+  }
+  .gold-text{
+    background: linear-gradient(90deg,#b8862d 0%,#f4d58d 45%,#b8862d 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .card{
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border:1px solid rgba(212,162,76,0.25);
+    box-shadow: 0 20px 60px -20px rgba(180,130,50,0.25), 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .divider{
+    background: linear-gradient(90deg, transparent, rgba(212,162,76,0.5), transparent);
+    height:1px;
+  }
+  .sig-canvas{
+    background:
+      repeating-linear-gradient(0deg, transparent 0 39px, rgba(212,162,76,0.15) 39px 40px),
+      linear-gradient(180deg,#fffdf7 0%, #fffaf0 100%);
+    border: 1.5px dashed rgba(212,162,76,0.55);
+    border-radius: 12px;
+    touch-action: none;
+    cursor: crosshair;
+    width: 100%;
+    display:block;
+  }
+  .sig-canvas.signed{ border-style:solid; border-color:#b8862d; }
+  .input{
+    width:100%;
+    padding:.75rem .9rem;
+    border:1px solid #e5e1d5;
+    border-radius:10px;
+    background:#fffdf7;
+    transition:all .2s ease;
+    outline:none;
+    font-size:16px;
+    min-height:44px;
+    box-sizing:border-box;
+  }
+  .input:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(212,162,76,0.18);
+  }
+  select.input{
+    appearance:none;
+    -webkit-appearance:none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8862d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat:no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg,#d4a24c 0%,#b8862d 100%);
+    color:#fff;
+    font-weight:600;
+    padding:.85rem 1.5rem;
+    border-radius:12px;
+    box-shadow: 0 8px 20px -8px rgba(180,130,50,0.55);
+    transition: transform .15s ease, box-shadow .2s ease, opacity .2s;
+    min-height:44px;
+    font-size:.95rem;
+    cursor:pointer;
+    border:none;
+  }
+  .btn-primary:hover:not(:disabled){ transform: translateY(-1px); box-shadow:0 12px 26px -10px rgba(180,130,50,0.65);}
+  .btn-primary:active:not(:disabled){ transform: translateY(0); }
+  .btn-primary:disabled{ opacity:.5; cursor:not-allowed;}
+  .btn-ghost{
+    background:#fff;
+    border:1px solid #e5e1d5;
+    color:#4b5563;
+    padding:.65rem 1rem;
+    border-radius:10px;
+    transition: all .2s;
+    min-height:44px;
+    font-size:.9rem;
+    cursor:pointer;
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:#b8862d;}
+  .btn-ghost:active{ transform: scale(0.97); }
+  .chip{
+    display:inline-flex; align-items:center; gap:.35rem;
+    padding:.3rem .7rem; border-radius:999px;
+    background: rgba(212,162,76,0.12);
+    color:#8a6517;
+    font-size:.78rem; font-weight:600;
+    border:1px solid rgba(212,162,76,0.3);
+  }
+  .fade-in{ animation: fadeIn .5s ease both;}
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+  .confetti{
+    position:absolute; width:8px; height:14px; top:-20px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform: translateY(110vh) rotate(720deg); opacity:.9;}
+  }
+  .modal-bg{
+    position:fixed; inset:0; background:rgba(20,20,20,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:50;
+    padding: 1rem;
+    padding-top: calc(1rem + var(--safe-top));
+    padding-bottom: calc(1rem + var(--safe-bottom));
+    animation: fadeIn .25s ease both;
+    overflow-y:auto;
+  }
+  .modal-content{
+    width:100%;
+    max-width:28rem;
+    margin:auto;
+  }
+  .modal-content-lg{ max-width: 56rem; }
+  .modal-content-md{ max-width: 42rem; }
+  .seal{
+    position:absolute; right:16px; top:16px;
+    width:72px; height:72px;
+    border:2.5px double #b8862d;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#b8862d; font-weight:700; font-size:.55rem;
+    transform: rotate(-12deg);
+    opacity:.85;
+    text-align:center;
+    line-height:1.1;
+    flex-shrink:0;
+  }
+  .seal::before{
+    content:""; position:absolute; inset:5px;
+    border:1px solid #b8862d; border-radius:50%;
+  }
+  @media (min-width: 640px){
+    .seal{ width:96px; height:96px; right:24px; top:24px; font-size:.7rem; border-width:3px;}
+    .seal::before{ inset:6px;}
+  }
+  .trophy{
+    display:inline-block;
+    animation: wobble 2.4s ease-in-out infinite;
+  }
+  @keyframes wobble{
+    0%,100%{ transform: rotate(-4deg);}
+    50%{ transform: rotate(4deg);}
+  }
+  .field-label{ font-size:.8rem; font-weight:600; color:#6b7280; letter-spacing:.02em;}
+  .required::after{ content:" *"; color:#d97706;}
+  .db-pill{
+    position:fixed; top: calc(12px + var(--safe-top)); right: calc(12px + var(--safe-right)); z-index:40;
+    display:flex; align-items:center; gap:.5rem;
+    padding:.5rem .9rem;
+    background:#fff;
+    border:1px solid rgba(212,162,76,0.3);
+    border-radius:999px;
+    box-shadow:0 6px 20px -8px rgba(0,0,0,0.15);
+    font-size:.78rem; font-weight:600;
+    cursor:pointer;
+    transition:all .2s;
+    min-height:40px;
+  }
+  .db-pill:hover{ transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(0,0,0,0.2);}
+  .db-dot{ width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981; flex-shrink:0;}
+  .row-item{
+    border:1px solid #eee6d3;
+    border-radius:12px;
+    padding:1rem;
+    background:#fffdf7;
+    transition:all .2s;
+  }
+  .row-item:hover{ border-color:var(--gold); box-shadow:0 4px 14px -6px rgba(180,130,50,0.25);}
+  .sig-thumb{
+    background:
+      repeating-linear-gradient(0deg, transparent 0 14px, rgba(212,162,76,0.15) 14px 15px),
+      #fffaf0;
+    border:1px solid rgba(212,162,76,0.4);
+    border-radius:8px;
+  }
+  .tab-btn{
+    padding:.55rem 1rem;
+    border-radius:8px;
+    font-size:.85rem;
+    font-weight:600;
+    color:#6b7280;
+    transition:all .2s;
+    min-height:40px;
+    cursor:pointer;
+    border:none;
+    background:transparent;
+  }
+  .tab-btn.active{
+    background: linear-gradient(135deg,#d4a24c 0%,#b8862d 100%);
+    color:#fff;
+  }
+  .day-option{
+    position:relative;
+    cursor:pointer;
+  }
+  .day-option input{
+    position:absolute; opacity:0; pointer-events:none;
+  }
+  .day-option .day-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:.75rem;
+    padding:.9rem 1rem;
+    border:1.5px solid #e5e1d5;
+    border-radius:12px;
+    background:#fffdf7;
+    transition: all .2s ease;
+    min-height:52px;
+    font-weight:600;
+    color:#374151;
+  }
+  .day-option .day-card .day-icon{
+    font-size:1.25rem;
+  }
+  .day-option .day-card .day-check{
+    width:22px; height:22px;
+    border-radius:50%;
+    border:2px solid #d1d5db;
+    display:flex; align-items:center; justify-content:center;
+    transition: all .2s;
+    flex-shrink:0;
+    background:#fff;
+  }
+  .day-option .day-card .day-check svg{
+    width:14px; height:14px;
+    opacity:0;
+    transition: opacity .2s;
+    color:#fff;
+  }
+  .day-option input:checked + .day-card{
+    border-color:var(--gold);
+    background: linear-gradient(135deg, #fff8e7 0%, #fff4d6 100%);
+    box-shadow: 0 0 0 3px rgba(212,162,76,0.18);
+  }
+  .day-option input:checked + .day-card .day-check{
+    border-color:var(--gold);
+    background: linear-gradient(135deg,#d4a24c 0%,#b8862d 100%);
+  }
+  .day-option input:checked + .day-card .day-check svg{ opacity:1;}
+  .day-option:active .day-card{ transform: scale(0.98);}
+  @media (max-width: 639px){
+    .card{ padding: 1.25rem 1rem; }
+    .card > .seal + div{ padding-right: 72px; }
+    .modal-bg{ padding: 0.75rem; align-items: flex-end;}
+    .modal-content{ margin-top: auto; margin-bottom: auto; border-radius: 1.25rem;}
+  }
+  @media (max-height: 500px) and (orientation: landscape){
+    body{ padding-top: 0.5rem;}
+    .seal{ width:60px; height:60px; font-size:.5rem;}
+  }
+  @media (min-width: 1280px){
+    .card{ padding: 2.75rem 3rem; }
+  }
+  @supports (-webkit-touch-callout: none){
+    .input{ font-size: 16px; }
+  }
+  ::-webkit-scrollbar{ width:8px; height:8px;}
+  ::-webkit-scrollbar-track{ background: transparent;}
+  ::-webkit-scrollbar-thumb{ background: rgba(212,162,76,0.3); border-radius:4px;}
+  ::-webkit-scrollbar-thumb:hover{ background: rgba(212,162,76,0.5);}
+  button:focus-visible, input:focus-visible, select:focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  @media print{
+    .db-pill, .modal-bg, #successModal, #dbModal, #detailModal, #loginScreen, #logoutBtn, #adminNav, #adminView{ display:none !important;}
+    body{ background:white;}
+    .card{ box-shadow:none; border:1px solid #ccc;}
+  }
+  #loginScreen{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #fff7e0 0%, transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, #ffe9c7 0%, transparent 55%),
+      linear-gradient(180deg,#fbfaf5 0%, #f3efe6 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:1rem;
+  }
+  #loginScreen.hidden{ display:none;}
+  .login-card{
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border:1px solid rgba(212,162,76,0.3);
+    box-shadow: 0 25px 70px -20px rgba(180,130,50,0.3), 0 4px 12px rgba(0,0,0,0.06);
+    border-radius: 24px;
+    padding: 2rem;
+    max-width: 440px;
+    width: 100%;
+    animation: slideUp .5s ease both;
+  }
+  @keyframes slideUp{
+    from{ opacity:0; transform:translateY(20px);}
+    to{ opacity:1; transform:none;}
+  }
+  .login-logo{
+    width:80px;
+    height:80px;
+    margin:0 auto 1rem;
+    background: linear-gradient(135deg,#d4a24c 0%,#b8862d 100%);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2.5rem;
+    box-shadow: 0 10px 30px -10px rgba(180,130,50,0.5);
+  }
+  .login-tabs{
+    display:flex;
+    background:#f3efe6;
+    border-radius:12px;
+    padding:4px;
+    margin-bottom:1.5rem;
+    gap:4px;
+  }
+  .login-tab{
+    flex:1;
+    padding:.7rem 1rem;
+    border-radius:10px;
+    border:none;
+    background:transparent;
+    font-weight:600;
+    font-size:.9rem;
+    color:#6b7280;
+    cursor:pointer;
+    transition:all .25s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.5rem;
+  }
+  .login-tab.active{
+    background:#fff;
+    color:#b8862d;
+    box-shadow:0 2px 8px rgba(180,130,50,0.15);
+  }
+  .login-tab .tab-icon{
+    font-size:1.1rem;
+  }
+  .login-error{
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: .75rem;
+    border-radius: 10px;
+    font-size: .875rem;
+    margin-top: 1rem;
+    display: none;
+  }
+  .login-error.show{ display:block; animation: shake .4s ease;}
+  @keyframes shake{
+    0%,100%{ transform:translateX(0);}
+    25%{ transform:translateX(-8px);}
+    75%{ transform:translateX(8px);}
+  }
+  .login-form{ display:none;}
+  .login-form.active{ display:block; animation: fadeIn .3s ease both;}
+  .logout-btn{
+    position:fixed;
+    top: calc(12px + var(--safe-top));
+    left: calc(12px + var(--safe-left));
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.5rem .9rem;
+    background:#fff;
+    border:1px solid rgba(212,162,76,0.3);
+    border-radius:999px;
+    box-shadow:0 6px 20px -8px rgba(0,0,0,0.15);
+    font-size:.78rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .2s;
+    min-height:40px;
+    color:#dc2626;
+  }
+  .logout-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(0,0,0,0.2); border-color:#fecaca;}
+  .user-badge{
+    position:fixed;
+    top: calc(12px + var(--safe-top));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.5rem 1rem;
+    background:#fff;
+    border:1px solid rgba(212,162,76,0.3);
+    border-radius:999px;
+    box-shadow:0 6px 20px -8px rgba(0,0,0,0.15);
+    font-size:.78rem;
+    font-weight:600;
+    min-height:40px;
+  }
+  .user-badge .role-tag{
+    padding:.15rem .5rem;
+    border-radius:999px;
+    font-size:.7rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .role-user{ background:rgba(59,130,246,0.1); color:#1d4ed8; border:1px solid rgba(59,130,246,0.3);}
+  .role-admin{ background:rgba(220,38,38,0.1); color:#dc2626; border:1px solid rgba(220,38,38,0.3);}
+  #adminView{ display:none;}
+  #adminView.active{ display:block;}
+  #userView{ display:none;}
+  #userView.active{ display:block;}
+  .stat-card{
+    background: rgba(255,255,255,0.9);
+    border:1px solid rgba(212,162,76,0.25);
+    border-radius:16px;
+    padding:1.25rem;
+    transition:all .2s;
+  }
+  .stat-card:hover{ transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(180,130,50,0.2);}
+  .stat-icon{
+    width:48px; height:48px;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem;
+    margin-bottom:.75rem;
+  }
+  .stat-value{ font-size:1.75rem; font-weight:800; color:#1f2937; line-height:1;}
+  .stat-label{ font-size:.75rem; color:#6b7280; margin-top:.25rem; font-weight:600;}
+  .admin-header{
+    background: linear-gradient(135deg, #b8862d 0%, #d4a24c 100%);
+    color:#fff;
+    padding:1.5rem;
+    border-radius:16px;
+    margin-bottom:1.5rem;
+  }
+  .admin-nav{
+    display:flex;
+    gap:.5rem;
+    flex-wrap:wrap;
+    margin-bottom:1.5rem;
+    background: rgba(255,255,255,0.9);
+    padding:.5rem;
+    border-radius:14px;
+    border:1px solid rgba(212,162,76,0.25);
+  }
+  .admin-nav-btn{
+    flex:1;
+    min-width:120px;
+    padding:.7rem 1rem;
+    border-radius:10px;
+    border:none;
+    background:transparent;
+    font-weight:600;
+    font-size:.85rem;
+    color:#6b7280;
+    cursor:pointer;
+    transition:all .2s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+  }
+  .admin-nav-btn.active{
+    background: linear-gradient(135deg,#d4a24c 0%,#b8862d 100%);
+    color:#fff;
+    box-shadow:0 4px 12px -4px rgba(180,130,50,0.4);
+  }
+  .admin-panel{ display:none;}
+  .admin-panel.active{ display:block; animation: fadeIn .3s ease both;}
+  .data-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:.85rem;
+  }
+  .data-table th{
+    text-align:left;
+    padding:.75rem;
+    background:#f3efe6;
+    color:#6b7280;
+    font-weight:600;
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    border-bottom:1px solid #e5e1d5;
+  }
+  .data-table th:first-child{ border-top-left-radius:10px;}
+  .data-table th:last-child{ border-top-right-radius:10px;}
+  .data-table td{
+    padding:.75rem;
+    border-bottom:1px solid #f3efe6;
+    background:#fffdf7;
+  }
+  .data-table tr:hover td{ background:#fff8e7;}
+  .data-table td:first-child{ border-top-left-radius:8px; border-bottom-left-radius:8px;}
+  .data-table td:last-child{ border-top-right-radius:8px; border-bottom-right-radius:8px;}
+</style>
+</head>
+<body class="px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">🏆</div>
+    <h1 class="text-2xl font-extrabold gold-text text-center mb-1">Jabil Annual Dinner 2026</h1>
+    <p class="text-center text-sm text-gray-600 mb-5">Prize Winner Acknowledgment System</p>
+    
+    <div class="login-tabs">
+      <button type="button" class="login-tab active" data-role="user" onclick="switchLoginTab('user')">
+        <span class="tab-icon">👤</span> User Login
+      </button>
+      <button type="button" class="login-tab" data-role="admin" onclick="switchLoginTab('admin')">
+        <span class="tab-icon">🛡️</span> Admin Login
+      </button>
+    </div>
+
+    <form id="userLoginForm" class="login-form active" onsubmit="return handleLogin(event,'user')">
+      <div class="mb-4">
+        <label class="field-label required">Username</label>
+        <input required class="input mt-1" id="userLoginUsername" placeholder="Enter username" autocomplete="username"/>
+      </div>
+      <div class="mb-4">
+        <label class="field-label required">Password</label>
+        <input required type="password" class="input mt-1" id="userLoginPassword" placeholder="Enter password" autocomplete="current-password"/>
+      </div>
+      <button type="submit" class="btn-primary w-full mt-2">
+        👤 Sign In as User
+      </button>
+      <div id="userLoginError" class="login-error">
+        Invalid username or password. Please try again.
+      </div>
+    </form>
+
+    <form id="adminLoginForm" class="login-form" onsubmit="return handleLogin(event,'admin')">
+      <div class="mb-4">
+        <label class="field-label required">Admin Username</label>
+        <input required class="input mt-1" id="adminLoginUsername" placeholder="Enter admin username" autocomplete="username"/>
+      </div>
+      <div class="mb-4">
+        <label class="field-label required">Admin Password</label>
+        <input required type="password" class="input mt-1" id="adminLoginPassword" placeholder="Enter admin password" autocomplete="current-password"/>
+      </div>
+      <button type="submit" class="btn-primary w-full mt-2" style="background: linear-gradient(135deg,#dc2626 0%,#991b1b 100%);">
+        🛡️ Sign In as Admin
+      </button>
+      <div id="adminLoginError" class="login-error">
+        Invalid admin credentials. Please try again.
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ TOP BAR (after login) ============ -->
+<button id="logoutBtn" class="logout-btn hidden" title="Logout" onclick="handleLogout()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+    <polyline points="16 17 21 12 16 7"></polyline>
+    <line x1="21" y1="12" x2="9" y2="12"></line>
+  </svg>
+  <span>Logout</span>
+</button>
+
+<div id="userBadge" class="user-badge hidden">
+  <span id="badgeIcon">👤</span>
+  <span id="badgeName">User</span>
+  <span id="badgeRole" class="role-tag role-user">USER</span>
+</div>
+
+<!-- ============ USER VIEW ============ -->
+<div id="userView">
+  <div class="max-w-4xl mx-auto w-full">
+    <header class="text-center mb-6 sm:mb-8 fade-in pt-10">
+      <div class="inline-flex items-center gap-2 chip mb-3">
+        <span class="trophy">🏆</span> Jabil Annual Dinner 2026
+      </div>
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold gold-text tracking-tight px-2">Prize Winner Acknowledgment</h1>
+      <p class="mt-3 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-2">Congratulations! Please complete this digital signature form to confirm receipt of your prize and acknowledge the terms below.</p>
+    </header>
+
+    <form id="signatureForm" class="card rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 relative fade-in" autocomplete="off">
+      <div class="seal">OFFICIAL<br/>DOCUMENT</div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5 sm:mb-6 pr-16 sm:pr-24">
+        <div class="min-w-0">
+          <div class="text-xs text-gray-500">Document Reference</div>
+          <div class="font-mono text-xs sm:text-sm font-semibold text-gray-800 truncate" id="docRef">JAD-2026-000000</div>
+        </div>
+        <div class="text-right">
+          <div class="text-xs text-gray-500">Issued On</div>
+          <div class="text-xs sm:text-sm font-semibold text-gray-800" id="issuedOn">—</div>
+        </div>
+      </div>
+
+      <div class="divider mb-5 sm:mb-6"></div>
+
+      <section class="mb-6 sm:mb-8">
+        <h2 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+          <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 text-white text-xs flex items-center justify-center flex-shrink-0">1</span>
+          Winner Information
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div>
+            <label class="field-label required">Full Name</label>
+            <input required class="input mt-1" id="fullName" placeholder="e.g. Jane Doe"/>
+          </div>
+          <div>
+            <label class="field-label required">Employee ID / Passport No.</label>
+            <input required class="input mt-1" id="idNumber" placeholder="e.g. J12345678"/>
+          </div>
+          <div>
+            <label class="field-label required">Department</label>
+            <input required class="input mt-1" id="phone" placeholder="e.g. Manufacturing, Engineering"/>
+          </div>
+          <div>
+            <label class="field-label required">Email Address</label>
+            <input required type="email" class="input mt-1" id="email" placeholder="you@jabil.com"/>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="field-label">Contact Number</label>
+            <input class="input mt-1" id="address" placeholder="+1 555 000 0000"/>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-6 sm:mb-8">
+        <h2 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+          <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 text-white text-xs flex items-center justify-center flex-shrink-0">2</span>
+          Prize Details
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div>
+            <label class="field-label required">Prize Name</label>
+            <select required class="input mt-1" id="prizeName">
+              <option value="">Select prize…</option>
+              <option>Motorcyle Yamaha Xmax 250</option>
+              <option>iPhone 18 Duo + Garmin Fenix E Smartwatch 47mm</option>
+              <option>iPhone 18 Duo + Samsung 55-inch The Frame Pro LS03HE</option>
+              <option>Harvey Norman Gift Card RM5,000.00</option>
+              <option>Garmin Fenix E Smartwatch 47mm - Slate Gray Steel with Black Silicone Band (010-03025-13)</option>
+              <option>Samsung 55-inch The Frame Pro LS03HE 4K AI 2026 Smart TV - Black (QA55LS03HE)</option>
+              <option>Apple iPad Air M3 256GB 13-inch Tablet - Purple (MCNR4ZP/A)</option>
+              <option>Dreame Aqua 10 Roller Robot Vacuum</option>
+              <option>Playstation 5 Digital</option>
+              <option>Insta360 X5 Action Camera Starter Bundle - Midnight Black (CINSAAHA-X534)</option>
+              <option>Sony 1000X Series Wireless Noise Cancelling Headphones - Black (WH-1000XM6/B)</option>
+              <option>Philips 1200 Fully Automatic Espresso Machine - Matte Black</option>
+              <option>DJI Neo 2 Fly More Combo Drone - Gray</option>
+              <option>Bose QuietComfort Ultra Earbuds (2nd Gen) - Black (896637-0010)</option>
+              <option>Casio G-SHOCK GBX-100S-2</option>
+              <option>CROSSING INVI TRUNK 26" Medium Expandable Luggage With Front &amp; Middle Access</option>
+              <option>LG 25L Smart Inverter NeoChef Microwave Oven - Black (MH6535GIS)</option>
+              <option>Jisulife Table Fan Pro3 - Dark Grey (JL-TFPro3)</option>
+              <option>Philips 7000 Series Hair Dryer (BHD720/13)</option>
+              <option>Xiaomi Portable Photo Printer 1S</option>
+              <option>Xioami Smart Air Purifier 4 Compact</option>
+              <option>T&amp;G Gift Cards - RM200</option>
+              <option>T&amp;G Gift Cards - RM150</option>
+              <option>T&amp;G Gift Cards - RM100</option>
+              <option>T&amp;G Gift Cards - RM50</option>
+              <option>T&amp;G Gift Cards - RM100</option>
+              <option>T&amp;G Gift Cards - RM50</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label required">Prize Tier</label>
+            <select required class="input mt-1" id="prizeTier">
+              <option value="">Select tier…</option>
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+              <option>5</option><option>6</option><option>7</option><option>8</option>
+              <option>9</option><option>10</option><option>11</option><option>12</option>
+              <option>13</option><option>14</option><option>15</option><option>16</option>
+              <option>17</option><option>18</option><option>19</option><option>20</option><option>21</option>
+              <option>Special Draw</option>
+              <option>1st Consolation Draw</option>
+              <option>2nd Consolation Draw</option>
+              <option>3rd Consolation Draw</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="field-label required">Draw Day</label>
+          <div class="grid grid-cols-2 gap-3 mt-2">
+            <label class="day-option">
+              <input type="radio" name="drawDay" value="Day 1" required/>
+              <div class="day-card">
+                <div class="flex items-center gap-2.5">
+                  <span class="day-icon">📅</span>
+                  <span>Day 1</span>
+                </div>
+                <span class="day-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+            </label>
+            <label class="day-option">
+              <input type="radio" name="drawDay" value="Day 2" required/>
+              <div class="day-card">
+                <div class="flex items-center gap-2.5">
+                  <span class="day-icon">📅</span>
+                  <span>Day 2</span>
+                </div>
+                <span class="day-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-6 sm:mb-8">
+        <h2 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+          <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 text-white text-xs flex items-center justify-center flex-shrink-0">3</span>
+          Declaration &amp; Terms
+        </h2>
+        <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-3 sm:p-4 text-xs sm:text-sm text-gray-700 leading-relaxed max-h-40 sm:max-h-48 overflow-y-auto">
+          <p class="mb-2"><strong>By signing below, I hereby confirm and declare that:</strong></p>
+          <ol class="list-decimal pl-4 sm:pl-5 space-y-1.5">
+            <li>I am the legitimate winner of the above-listed prize in the Jabil Annual Dinner 2026 lucky draw.</li>
+            <li>All personal information provided in this form is true, accurate, and complete.</li>
+            <li>I accept the prize as awarded and acknowledge that no cash substitution is permitted unless otherwise stated.</li>
+            <li>I consent to the use of my name and likeness for internal Jabil communications and event-related promotions, where permitted by law.</li>
+            <li>I understand that any applicable taxes arising from the prize are my sole responsibility.</li>
+            <li>I agree to the official Jabil Annual Dinner 2026 lucky draw rules and company policies.</li>
+          </ol>
+        </div>
+        <label class="mt-4 flex items-start gap-3 cursor-pointer select-none p-2 -mx-2 rounded-lg active:bg-amber-50/50">
+          <input type="checkbox" id="agreeTerms" class="mt-0.5 w-5 h-5 accent-amber-600 flex-shrink-0"/>
+          <span class="text-xs sm:text-sm text-gray-700">I have read, understood, and agree to the declaration and terms above.</span>
+        </label>
+      </section>
+
+      <section class="mb-6 sm:mb-8">
+        <h2 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+          <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 text-white text-xs flex items-center justify-center flex-shrink-0">4</span>
+          Digital Signature
+        </h2>
+        <div class="relative">
+          <canvas id="sigCanvas" class="sig-canvas" height="200"></canvas>
+          <div id="sigPlaceholder" class="pointer-events-none absolute inset-0 flex items-center justify-center text-amber-700/40 font-semibold select-none text-xs sm:text-sm px-4 text-center">
+            Sign here using your mouse or finger
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-3 mt-3">
+          <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+            <span id="sigStatus" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
+              <span class="w-2 h-2 rounded-full bg-gray-400"></span> Awaiting signature
+            </span>
+            <span id="sigTime" class="hidden">Captured: <span id="sigTimeVal">—</span></span>
+          </div>
+          <button type="button" id="clearSig" class="btn-ghost text-sm">✕ Clear</button>
+        </div>
+      </section>
+
+      <div class="divider mb-5 sm:mb-6"></div>
+
+      <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
+        <p class="text-xs text-gray-500">
+          This document will be digitally timestamped and stored in the local database upon submission.
+        </p>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button type="button" id="resetForm" class="btn-ghost flex-1 sm:flex-none">Reset</button>
+          <button type="submit" id="submitBtn" class="btn-primary flex-1 sm:flex-none" disabled>
+            Submit &amp; Confirm
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <p class="text-center text-xs text-gray-500 mt-6 px-2 pb-4">© 2026 Jabil Inc. · Annual Dinner Committee · Secure Digital Submission</p>
+  </div>
+</div>
+
+<!-- ============ ADMIN VIEW ============ -->
+<div id="adminView">
+  <div class="max-w-6xl mx-auto w-full pt-10">
+    <div class="admin-header fade-in">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <div class="text-xs opacity-80 mb-1">ADMIN DASHBOARD</div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">🛡️ Submission Management</h1>
+          <p class="text-sm opacity-90 mt-1">Manage all prize winner acknowledgments</p>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          <button onclick="exportAllJson()" class="btn-ghost text-sm" style="background:rgba(255,255,255,0.95);">⬇ JSON</button>
+          <button onclick="exportAllCsv()" class="btn-ghost text-sm" style="background:rgba(255,255,255,0.95);">⬇ CSV</button>
+          <button onclick="clearAllRecords()" class="btn-ghost text-sm" style="background:rgba(255,255,255,0.95);color:#dc2626;border-color:rgba(220,38,38,0.3);">🗑 Clear All</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-5">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(212,162,76,0.15);">📊</div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">Total Records</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(16,185,129,0.15);">📅</div>
+        <div class="stat-value" id="statToday">0</div>
+        <div class="stat-label">Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(59,130,246,0.15);">🏆</div>
+        <div class="stat-value" id="statGrand">0</div>
+        <div class="stat-label">Tier 1 Winners</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(168,85,247,0.15);">📆</div>
+        <div class="stat-value" id="statDay1">0</div>
+        <div class="stat-label">Day 1</div>
+      </div>
+    </div>
+
+    <div class="admin-nav">
+      <button class="admin-nav-btn active" data-panel="records" onclick="switchAdminPanel('records')">
+         All Records
+      </button>
+      <button class="admin-nav-btn" data-panel="day1" onclick="switchAdminPanel('day1')">
+         Day 1
+      </button>
+      <button class="admin-nav-btn" data-panel="day2" onclick="switchAdminPanel('day2')">
+        📅 Day 2
+      </button>
+      <button class="admin-nav-btn" data-panel="tiers" onclick="switchAdminPanel('tiers')">
+        🏆 By Tier
+      </button>
+    </div>
+
+    <div id="panel-records" class="admin-panel active">
+      <div class="card rounded-2xl p-4 sm:p-6">
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+          <h3 class="text-lg font-bold text-gray-800">📋 All Submissions</h3>
+          <input type="text" id="searchInput" class="input" style="max-width:280px;min-height:38px;" placeholder="🔍 Search by name, ID, prize..." oninput="renderAdminTable()"/>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table" id="adminTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Employee ID</th>
+                <th>Department</th>
+                <th>Prize</th>
+                <th>Tier</th>
+                <th>Day</th>
+                <th>Submitted</th>
+                <th>Signature</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+        <div id="noRecords" class="hidden text-center py-12 text-gray-400">
+          <div class="text-5xl mb-3">📭</div>
+          <p class="font-semibold">No records found</p>
+          <p class="text-xs mt-1">Submissions will appear here after winners sign the form.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-day1" class="admin-panel">
+      <div class="card rounded-2xl p-4 sm:p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">📅 Day 1 Submissions</h3>
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Name</th><th>Prize</th><th>Tier</th><th>Submitted</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="day1TableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-day2" class="admin-panel">
+      <div class="card rounded-2xl p-4 sm:p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">📅 Day 2 Submissions</h3>
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Name</th><th>Prize</th><th>Tier</th><th>Submitted</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="day2TableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-tiers" class="admin-panel">
+      <div class="card rounded-2xl p-4 sm:p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">🏆 Records by Tier</h3>
+        <div id="tierSummary" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <p class="text-center text-xs text-gray-500 mt-6 pb-4">© 2026 Jabil Inc. · Admin Panel · Secure Access</p>
+  </div>
+</div>
+
+<!-- ============ SUCCESS MODAL (User) ============ -->
+<div id="successModal" class="modal-bg hidden">
+  <div class="modal-content relative bg-white rounded-2xl p-6 sm:p-8 text-center overflow-hidden">
+    <div id="confettiBox" class="pointer-events-none absolute inset-0"></div>
+    <div class="relative">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 flex items-center justify-center text-3xl sm:text-4xl shadow-lg shadow-amber-200">🎉</div>
+      <h3 class="mt-4 text-xl sm:text-2xl font-extrabold gold-text">Submission Successful!</h3>
+      <p class="mt-2 text-gray-600 text-sm">Thank you, <span id="confirmName" class="font-semibold text-gray-800">Winner</span>. Your signed acknowledgment has been recorded.</p>
+      <div class="mt-5 bg-amber-50 border border-amber-200 rounded-xl p-3 sm:p-4 text-left text-xs sm:text-sm">
+        <div class="flex justify-between py-1 gap-2"><span class="text-gray-500 flex-shrink-0">Reference</span><span class="font-mono font-semibold text-gray-800 truncate" id="confirmRef">—</span></div>
+        <div class="flex justify-between py-1 gap-2"><span class="text-gray-500 flex-shrink-0">Prize</span><span class="font-semibold text-gray-800 truncate" id="confirmPrize">—</span></div>
+        <div class="flex justify-between py-1 gap-2"><span class="text-gray-500 flex-shrink-0">Tier</span><span class="font-semibold text-gray-800 truncate" id="confirmTier">—</span></div>
+        <div class="flex justify-between py-1 gap-2"><span class="text-gray-500 flex-shrink-0">Draw Day</span><span class="font-semibold text-gray-800 truncate" id="confirmDay">—</span></div>
+        <div class="flex justify-between py-1 gap-2"><span class="text-gray-500 flex-shrink-0">Signed At</span><span class="font-semibold text-gray-800 truncate" id="confirmTime">—</span></div>
+      </div>
+      <div class="mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <button id="printBtn" class="btn-ghost flex-1"> Print Copy</button>
+        <button id="closeModal" class="btn-primary flex-1" onclick="closeSuccessModal()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DETAIL MODAL (Admin) ============ -->
+<div id="detailModal" class="modal-bg hidden">
+  <div class="modal-content modal-content-md bg-white rounded-2xl max-h-[95vh] overflow-y-auto">
+    <div class="p-4 sm:p-6 border-b border-amber-100 flex items-center justify-between sticky top-0 bg-white z-10">
+      <h3 class="text-base sm:text-lg font-extrabold gold-text"> Record Detail</h3>
+      <button class="btn-ghost text-sm" onclick="document.getElementById('detailModal').classList.add('hidden')">✕ Close</button>
+    </div>
+    <div id="detailBody" class="p-4 sm:p-6"></div>
+  </div>
+</div>
+
+<script>
+  const AUTH_KEY = 'jabil_auth_session';
+  
+  const USERS = {
+    user: { username: 'user', password: 'user123', role: 'user', name: 'User' },
+    admin: { username: 'admin', password: 'admin123', role: 'admin', name: 'Administrator' }
+  };
+  
+  function switchLoginTab(role) {
+    document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.login-tab[data-role="${role}"]`).classList.add('active');
+    document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
+    document.getElementById(role + 'LoginForm').classList.add('active');
+    document.querySelectorAll('.login-error').forEach(e => e.classList.remove('show'));
+  }
+  
+  function handleLogin(e, role) {
+    e.preventDefault();
+    const username = document.getElementById(role + 'LoginUsername').value.trim();
+    const password = document.getElementById(role + 'LoginPassword').value;
+    const user = USERS[role];
+    
+    if (username === user.username && password === user.password) {
+      sessionStorage.setItem(AUTH_KEY, JSON.stringify({
+        role: user.role,
+        name: user.name,
+        loginTime: new Date().toISOString()
+      }));
+      showApp(user.role);
+    } else {
+      document.getElementById(role + 'LoginError').classList.add('show');
+      document.getElementById(role + 'LoginPassword').value = '';
+    }
+    return false;
+  }
+  
+  function handleLogout() {
+    if (confirm('Are you sure you want to logout?')) {
+      sessionStorage.removeItem(AUTH_KEY);
+      location.reload();
+    }
+  }
+  
+  function showApp(role) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('logoutBtn').classList.remove('hidden');
+    document.getElementById('userBadge').classList.remove('hidden');
+    
+    const session = JSON.parse(sessionStorage.getItem(AUTH_KEY));
+    document.getElementById('badgeName').textContent = session.name;
+    document.getElementById('badgeRole').textContent = session.role.toUpperCase();
+    document.getElementById('badgeRole').className = 'role-tag role-' + session.role;
+    document.getElementById('badgeIcon').textContent = session.role === 'admin' ? '🛡️' : '👤';
+    
+    if (role === 'user') {
+      document.getElementById('userView').classList.add('active');
+      initUserApp();
+    } else {
+      document.getElementById('adminView').classList.add('active');
+      initAdminApp();
+    }
+  }
+
+  const DB_KEY = 'jabil_dinner_submissions_v6';
+  const db = {
+    getAll(){ try{ return JSON.parse(localStorage.getItem(DB_KEY)) || []; } catch(e){ return []; } },
+    save(record){
+      const all = this.getAll();
+      all.unshift(record);
+      localStorage.setItem(DB_KEY, JSON.stringify(all));
+      return record;
+    },
+    remove(id){
+      localStorage.setItem(DB_KEY, JSON.stringify(this.getAll().filter(r => r.id !== id)));
+    },
+    clear(){ localStorage.removeItem(DB_KEY); },
+    count(){ return this.getAll().length; }
+  };
+
+  const pad = n => String(n).padStart(2,'0');
+  const fmtDate = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const fmtFull = d => `${fmtDate(d)}:${pad(d.getSeconds())}`;
+  const escapeHtml = s => s == null ? '' : String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  let currentRef, hasSigned = false;
+  function initUserApp() {
+    const now = new Date();
+    document.getElementById('issuedOn').textContent = fmtDate(now);
+    currentRef = 'JAD-' + now.getFullYear() + '-' + String(Math.floor(100000 + Math.random()*900000));
+    document.getElementById('docRef').textContent = currentRef;
+    resizeCanvas();
+    validateForm();
+  }
+
+  const canvas = document.getElementById('sigCanvas');
+  const ctx = canvas.getContext('2d');
+  const placeholder = document.getElementById('sigPlaceholder');
+  const sigStatus = document.getElementById('sigStatus');
+  const sigTime = document.getElementById('sigTime');
+  const sigTimeVal = document.getElementById('sigTimeVal');
+  const submitBtn = document.getElementById('submitBtn');
+  const agreeBox = document.getElementById('agreeTerms');
+
+  function resizeCanvas(){
+    if (!canvas) return;
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width;
+    const targetH = window.innerWidth < 640 ? 180 : 220;
+    canvas.style.height = targetH + 'px';
+    canvas.width = w * ratio;
+    canvas.height = targetH * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#1f2937';
+    ctx.lineWidth = window.innerWidth < 640 ? 2.5 : 2.2;
+  }
+  
+  let resizeTimer;
+  window.addEventListener('resize', ()=>{ clearTimeout(resizeTimer); resizeTimer = setTimeout(resizeCanvas, 150);});
+
+  let drawing = false, lastX=0, lastY=0;
+  function getPos(e){ const rect = canvas.getBoundingClientRect(); const t = e.touches ? e.touches[0] : e; return { x: t.clientX - rect.left, y: t.clientY - rect.top }; }
+  function startDraw(e){ e.preventDefault(); drawing = true; const p = getPos(e); lastX = p.x; lastY = p.y; }
+  function moveDraw(e){
+    if(!drawing) return;
+    e.preventDefault();
+    const p = getPos(e);
+    ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke();
+    lastX = p.x; lastY = p.y;
+    if(!hasSigned){
+      hasSigned = true;
+      placeholder.style.display = 'none';
+      canvas.classList.add('signed');
+      sigStatus.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Signature captured';
+      sigStatus.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700';
+      sigTimeVal.textContent = fmtDate(new Date());
+      sigTime.classList.remove('hidden');
+      validateForm();
+    }
+  }
+  function endDraw(){ drawing = false; }
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', moveDraw);
+  window.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('touchstart', startDraw, {passive:false});
+  canvas.addEventListener('touchmove', moveDraw, {passive:false});
+  canvas.addEventListener('touchend', endDraw);
+
+  document.getElementById('clearSig').addEventListener('click', ()=>{
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    hasSigned = false;
+    placeholder.style.display = 'flex';
+    canvas.classList.remove('signed');
+    sigStatus.innerHTML = '<span class="w-2 h-2 rounded-full bg-gray-400"></span> Awaiting signature';
+    sigStatus.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-600';
+    sigTime.classList.add('hidden');
+    validateForm();
+  });
+
+  const form = document.getElementById('signatureForm');
+  function validateForm(){
+    const required = ['fullName','idNumber','phone','email','prizeName','prizeTier'];
+    const filled = required.every(id => document.getElementById(id).value.trim() !== '');
+    const drawDaySelected = document.querySelector('input[name="drawDay"]:checked');
+    submitBtn.disabled = !(filled && hasSigned && agreeBox.checked && drawDaySelected);
+  }
+  form.addEventListener('input', validateForm);
+  form.addEventListener('change', validateForm);
+  agreeBox.addEventListener('change', validateForm);
+  document.querySelectorAll('input[name="drawDay"]').forEach(r => r.addEventListener('change', validateForm));
+
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    if(submitBtn.disabled) return;
+    const submittedAt = new Date();
+    const drawDay = document.querySelector('input[name="drawDay"]:checked').value;
+    const record = {
+      id: 'REC-' + submittedAt.getTime() + '-' + Math.floor(Math.random()*1000),
+      ref: currentRef,
+      fullName: document.getElementById('fullName').value.trim(),
+      idNumber: document.getElementById('idNumber').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      address: document.getElementById('address').value.trim(),
+      prizeName: document.getElementById('prizeName').value.trim(),
+      prizeTier: document.getElementById('prizeTier').value,
+      drawDay: drawDay,
+      signatureImage: canvas.toDataURL('image/png'),
+      submittedAt: submittedAt.toISOString(),
+      submittedAtDisplay: fmtFull(submittedAt),
+      status: 'verified'
+    };
+    db.save(record);
+    document.getElementById('confirmName').textContent = record.fullName;
+    document.getElementById('confirmRef').textContent = record.ref;
+    document.getElementById('confirmPrize').textContent = record.prizeName;
+    document.getElementById('confirmTier').textContent = record.prizeTier;
+    document.getElementById('confirmDay').textContent = record.drawDay;
+    document.getElementById('confirmTime').textContent = record.submittedAtDisplay;
+    document.getElementById('successModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    spawnConfetti();
+  });
+
+  document.getElementById('resetForm').addEventListener('click', ()=>{
+    if(confirm('Reset the entire form?')){
+      form.reset();
+      document.getElementById('clearSig').click();
+      validateForm();
+    }
+  });
+
+  function closeSuccessModal(){
+    document.getElementById('successModal').classList.add('hidden');
+    document.body.style.overflow = '';
+    form.reset();
+    document.getElementById('clearSig').click();
+    currentRef = 'JAD-' + new Date().getFullYear() + '-' + String(Math.floor(100000 + Math.random()*900000));
+    document.getElementById('docRef').textContent = currentRef;
+    document.getElementById('issuedOn').textContent = fmtDate(new Date());
+  }
+  document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+
+  function spawnConfetti(){
+    const box = document.getElementById('confettiBox');
+    box.innerHTML = '';
+    const colors = ['#d4a24c','#f4d58d','#ef4444','#3b82f6','#10b981','#a855f7','#f59e0b'];
+    const count = window.innerWidth < 640 ? 30 : 60;
+    for(let i=0;i<count;i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random()*100 + '%';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (1.8 + Math.random()*1.6) + 's';
+      c.style.animationDelay = (Math.random()*0.6) + 's';
+      c.style.transform = `rotate(${Math.random()*360}deg)`;
+      box.appendChild(c);
+    }
+  }
+
+  function initAdminApp() {
+    updateStats();
+    renderAdminTable();
+    renderDayTables();
+    renderTierSummary();
+  }
+
+  function updateStats() {
+    const records = db.getAll();
+    const today = new Date().toDateString();
+    document.getElementById('statTotal').textContent = records.length;
+    document.getElementById('statToday').textContent = records.filter(r => new Date(r.submittedAt).toDateString() === today).length;
+    document.getElementById('statGrand').textContent = records.filter(r => r.prizeTier === '1').length;
+    document.getElementById('statDay1').textContent = records.filter(r => r.drawDay === 'Day 1').length;
+  }
+
+  function switchAdminPanel(panel) {
+    document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.admin-nav-btn[data-panel="${panel}"]`).classList.add('active');
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + panel).classList.add('active');
+    if (panel === 'records') renderAdminTable();
+    if (panel === 'day1' || panel === 'day2') renderDayTables();
+    if (panel === 'tiers') renderTierSummary();
+  }
+
+  function renderAdminTable() {
+    const records = db.getAll();
+    const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+    const filtered = records.filter(r => 
+      !search || 
+      r.fullName.toLowerCase().includes(search) ||
+      r.idNumber.toLowerCase().includes(search) ||
+      r.prizeName.toLowerCase().includes(search) ||
+      r.prizeTier.toLowerCase().includes(search)
+    );
+    const tbody = document.getElementById('adminTableBody');
+    const noRecords = document.getElementById('noRecords');
+    
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      noRecords.classList.remove('hidden');
+      return;
+    }
+    noRecords.classList.add('hidden');
+    
+    tbody.innerHTML = filtered.map((r, i) => `
+      <tr>
+        <td class="font-mono text-xs text-gray-500">${i+1}</td>
+        <td class="font-semibold">${escapeHtml(r.fullName)}</td>
+        <td class="font-mono text-xs">${escapeHtml(r.idNumber)}</td>
+        <td>${escapeHtml(r.phone)}</td>
+        <td class="max-w-[200px] truncate" title="${escapeHtml(r.prizeName)}">${escapeHtml(r.prizeName)}</td>
+        <td><span class="chip">Tier ${escapeHtml(r.prizeTier)}</span></td>
+        <td><span class="chip" style="background:rgba(59,130,246,0.1);color:#1d4ed8;border-color:rgba(59,130,246,0.3);">📅 ${escapeHtml(r.drawDay)}</span></td>
+        <td class="text-xs text-gray-500 whitespace-nowrap">${escapeHtml(r.submittedAtDisplay)}</td>
+        <td><img src="${r.signatureImage}" class="sig-thumb w-20 h-8 object-contain" alt="sig"/></td>
+        <td>
+          <div class="flex gap-1">
+            <button class="btn-ghost text-xs" style="min-height:32px;padding:.4rem .6rem;" onclick="viewRecord('${r.id}')"></button>
+            <button class="btn-ghost text-xs" style="min-height:32px;padding:.4rem .6rem;color:#dc2626;border-color:#fecaca;" onclick="deleteRecord('${r.id}')">🗑</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function renderDayTables() {
+    ['Day 1', 'Day 2'].forEach(day => {
+      const records = db.getAll().filter(r => r.drawDay === day);
+      const tbody = document.getElementById(day.toLowerCase().replace(' ','') + 'TableBody');
+      if (records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-gray-400">No ${day} submissions yet</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = records.map((r, i) => `
+        <tr>
+          <td class="font-mono text-xs text-gray-500">${i+1}</td>
+          <td class="font-semibold">${escapeHtml(r.fullName)}</td>
+          <td class="max-w-[200px] truncate" title="${escapeHtml(r.prizeName)}">${escapeHtml(r.prizeName)}</td>
+          <td><span class="chip">Tier ${escapeHtml(r.prizeTier)}</span></td>
+          <td class="text-xs text-gray-500 whitespace-nowrap">${escapeHtml(r.submittedAtDisplay)}</td>
+          <td>
+            <div class="flex gap-1">
+              <button class="btn-ghost text-xs" style="min-height:32px;padding:.4rem .6rem;" onclick="viewRecord('${r.id}')">👁</button>
+              <button class="btn-ghost text-xs" style="min-height:32px;padding:.4rem .6rem;color:#dc2626;border-color:#fecaca;" onclick="deleteRecord('${r.id}')">🗑</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    });
+  }
+
+  function renderTierSummary() {
+    const records = db.getAll();
+    const tierCount = {};
+    records.forEach(r => {
+      tierCount[r.prizeTier] = (tierCount[r.prizeTier] || 0) + 1;
+    });
+    const container = document.getElementById('tierSummary');
+    const tiers = Object.keys(tierCount).sort((a,b) => {
+      const na = parseInt(a), nb = parseInt(b);
+      if (!isNaN(na) && !isNaN(nb)) return na - nb;
+      return a.localeCompare(b);
+    });
+    
+    if (tiers.length === 0) {
+      container.innerHTML = '<div class="text-center py-8 text-gray-400">No records yet</div>';
+      return;
+    }
+    
+    container.innerHTML = tiers.map(t => {
+      const count = tierCount[t];
+      const pct = (count / records.length * 100).toFixed(1);
+      return `
+        <div class="flex items-center gap-3 p-3 bg-amber-50/50 rounded-xl border border-amber-100">
+          <div class="w-16 flex-shrink-0">
+            <span class="chip">Tier ${escapeHtml(t)}</span>
+          </div>
+          <div class="flex-1">
+            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-yellow-400 to-amber-600 rounded-full" style="width:${pct}%"></div>
+            </div>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="font-bold text-gray-800">${count}</div>
+            <div class="text-xs text-gray-500">${pct}%</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.viewRecord = function(id){
+    const r = db.getAll().find(x => x.id === id);
+    if(!r) return;
+    const body = document.getElementById('detailBody');
+    body.innerHTML = `
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+        <div><div class="text-xs text-gray-500">Reference</div><div class="font-mono font-semibold break-all">${escapeHtml(r.ref)}</div></div>
+        <div><div class="text-xs text-gray-500">Submitted</div><div class="font-semibold">${escapeHtml(r.submittedAtDisplay)}</div></div>
+        <div><div class="text-xs text-gray-500">Full Name</div><div class="font-semibold">${escapeHtml(r.fullName)}</div></div>
+        <div><div class="text-xs text-gray-500">Employee ID</div><div class="font-semibold">${escapeHtml(r.idNumber)}</div></div>
+        <div><div class="text-xs text-gray-500">Department</div><div class="font-semibold">${escapeHtml(r.phone)}</div></div>
+        <div><div class="text-xs text-gray-500">Email</div><div class="font-semibold break-all">${escapeHtml(r.email)}</div></div>
+        <div class="sm:col-span-2"><div class="text-xs text-gray-500">Contact</div><div class="font-semibold">${escapeHtml(r.address || '—')}</div></div>
+        <div class="sm:col-span-2"><div class="text-xs text-gray-500">Prize Name</div><div class="font-semibold">${escapeHtml(r.prizeName)}</div></div>
+        <div><div class="text-xs text-gray-500">Prize Tier</div><div class="font-semibold">${escapeHtml(r.prizeTier)}</div></div>
+        <div><div class="text-xs text-gray-500">Draw Day</div><div class="font-semibold"> ${escapeHtml(r.drawDay)}</div></div>
+      </div>
+      <div class="mt-5">
+        <div class="text-xs text-gray-500 mb-2">Signature</div>
+        <img src="${r.signatureImage}" class="sig-thumb w-full h-28 sm:h-32 object-contain bg-white"/>
+      </div>
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-2">
+        <span class="chip">✓ ${r.status}</span>
+        <button class="btn-ghost text-sm" onclick="window.open('${r.signatureImage}','_blank')">⬇ Download Signature</button>
+      </div>
+    `;
+    document.getElementById('detailModal').classList.remove('hidden');
+  };
+
+  window.deleteRecord = function(id){
+    if(!confirm('Delete this record permanently?')) return;
+    db.remove(id);
+    updateStats();
+    renderAdminTable();
+    renderDayTables();
+    renderTierSummary();
+  };
+
+  function exportAllJson() {
+    const data = db.getAll().map(r => { const { signatureImage, ...rest } = r; return rest; });
+    downloadFile('jabil_dinner_submissions.json', JSON.stringify(data, null, 2), 'application/json');
+  }
+  function exportAllCsv() {
+    const records = db.getAll();
+    if(records.length === 0){ alert('No records to export.'); return; }
+    const headers = ['ref','fullName','idNumber','phone','email','address','prizeName','prizeTier','drawDay','submittedAtDisplay','status'];
+    const rows = records.map(r => headers.map(h => csvEscape(r[h] || '')));
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    downloadFile('jabil_dinner_submissions.csv', csv, 'text/csv');
+  }
+  function clearAllRecords() {
+    if(db.count() === 0){ alert('Database is already empty.'); return; }
+    if(confirm(' Delete ALL records? This cannot be undone.')){
+      db.clear();
+      updateStats();
+      renderAdminTable();
+      renderDayTables();
+      renderTierSummary();
+    }
+  }
+  function csvEscape(v){ const s = String(v); if(/[",\n]/.test(s)) return '"' + s.replace(/"/g,'""') + '"'; return s; }
+  function downloadFile(name, content, type){
+    const blob = new Blob([content], {type});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  (function checkAuth(){
+    const session = sessionStorage.getItem(AUTH_KEY);
+    if (session) {
+      try {
+        const s = JSON.parse(session);
+        showApp(s.role);
+      } catch(e) { sessionStorage.removeItem(AUTH_KEY); }
+    }
+  })();
+</script>
+</body>
+</html>
